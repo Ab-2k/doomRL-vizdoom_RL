@@ -36,3 +36,36 @@ through **trial, error, and backpropagation**.
 Clone this repository:
 ```bash
 git clone https://github.com/Ab-2k/doomRL.git
+
+---
+
+```
+## 📚 Citation
+
+This project uses the [VizDoom](https://vizdoom.cs.put.edu.pl/) environment for reinforcement learning research.
+
+> M. Wydmuch, M. Kempka, and W. Jaśkowski,  
+> **"ViZDoom Competitions: Playing Doom from Pixels,"**  
+> *IEEE Transactions on Games*, vol. 11, no. 3, pp. 248–259, 2019.  
+> [arXiv:1809.03470](https://arxiv.org/abs/1809.03470)  
+> DOI: [10.1109/TG.2018.2877047](https://doi.org/10.1109/TG.2018.2877047)
+
+---
+
+### BibTeX
+```bibtex
+@article{Wydmuch2019ViZdoom,
+  author  = {Marek Wydmuch and Micha{\l} Kempka and Wojciech Ja\'skowski},
+  title   = {{ViZDoom} {C}ompetitions: {P}laying {D}oom from {P}ixels},
+  journal = {IEEE Transactions on Games},
+  year    = {2019},
+  volume  = {11},
+  number  = {3},
+  pages   = {248--259},
+  doi     = {10.1109/TG.2018.2877047},
+  note    = {The 2022 IEEE Transactions on Games Outstanding Paper Award}
+}
+
+
+
+
