@@ -1,0 +1,35 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs and checkpoints
+log.txt
+*.log
+*.out
+*.err
+*.pth
+*.pt
+checkpoints/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
+
+# VizDoom assets (shouldn’t be uploaded)
+vizdoom/
+scenarios/
+*.wad
+
+# Jupyter or notebook checkpoints
+*.ipynb_checkpoints/
