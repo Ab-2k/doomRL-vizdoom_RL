@@ -19,59 +19,12 @@ import torch
 from torch import nn, optim, distributions
 import torch.nn.functional as F
 import json
+from vizdoom_lib.model import Net
 
 
 lr = 0.001
+save_path = 'doomenv2/model.pt'
 
-class Net(nn.Module):
-    """
-    [120][160][3]
-    conv2d(kernal size 3, 16 feature planes, padding=1)
-    [120][160][3]
-    maxpooling(kernel size 4)
-    ReLU()
-    [30][40][16]
-    conv2d(kernal size 3, 16 feature planes, padding=1)
-    maxpooling(kernel size 4)
-    [7][10][16]
-    ReLU()
-    linear(7 * 10 * 16, 3)
-    """
-    
-    def __init__(self, image_height: int, image_width: int, num_actions: int):
-        super().__init__()
-        h = image_height
-        w = image_width
-        self.c1 = nn.Conv2d(
-            in_channels=3, out_channels=16, kernel_size=3, padding=1)
-        self.pool1 = nn.MaxPool2d(kernel_size=4)
-        h //= 4
-        w //= 4
-        self.c2 = nn.Conv2d(
-            in_channels=16, out_channels=16, kernel_size=3, padding=1)
-        self.pool2 = nn.MaxPool2d(kernel_size=4)
-        h //= 4
-        w //= 4
-        
-
-        self.output = nn.Linear(h * w * 16, num_actions)
-            #outchannel has to match the inchannel
-    def forward(self, x):
-        batch_size = x.size(0)
-
-        x = self.c1(x)
-        x = self.pool1(x)
-        x = F.relu(x)
-
-        x = self.c2(x)
-        x = self.pool2(x)
-        x = F.relu(x)
-        # [C] [H] [W]
-        # [C * H * W]
-        x = x.view(batch_size, -1)
-        #Flattens eveerything into being a single vector
-        x = self.output(x)
-        return x
 
 if __name__ == "__main__":
     # Create DoomGame instance. It will run the game and communicate with you.
@@ -89,7 +42,7 @@ if __name__ == "__main__":
     # Sets map to start (scenario .wad files can contain many maps).
     game.set_doom_map("map01")
 
-    # Sets resolution. Default is 320X240
+    # Sets resolution. Default is 320X240 also 160X120
     game.set_screen_resolution(vzd.ScreenResolution.RES_160X120)
 
     # Sets the screen buffer format. Not used here but now you can change it. Default is CRCGCB.
@@ -301,6 +254,9 @@ if __name__ == "__main__":
             'reward': game.get_total_reward()
         }) + '\n')
         out_f.flush()
+        if i % 10000 == 0:
+            torch.save(model, save_path)
+            print('saved model')
         i+=1
 
     # It will be done automatically anyway but sometimes you need to do it in the middle of the program...
